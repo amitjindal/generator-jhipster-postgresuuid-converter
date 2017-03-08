@@ -207,11 +207,11 @@ module.exports = yeoman.Base.extend({
         this.auditedEntities = [];
 
         this.entitiesToUpdate.forEach(function(entityName) {
-          this.auditedEntities.push("\"" + entityName + "\"")
+          this.auditedEntities.push("\"" + entityName + "\"");
           {
             // check if repositories are already annotated
             var uuidGeneratorAnnotation = '@GeneratedValue.*"UUIDGenerator"';
-            var pattern = new RegExp(uuidGeneratorAnnotation, 'g')
+            var pattern = new RegExp(uuidGeneratorAnnotation, 'g');
 
             var content = this.fs.read(this.javaDir + 'domain/' + entityName + '.java', 'utf8');
 
