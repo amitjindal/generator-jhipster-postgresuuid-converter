@@ -30,6 +30,8 @@ npm update -g generator-jhipster-postgresuuid-converter
 No other steps really needed. The generator should hook automatically into your entity generator and convert the code to UUID.
 However there are important considerations to be noted.
 
+WARNING: This is a work in progress. Please do not use it in production or use at your own risk.
+
 ## Important Considerations
 
 - We assume that Long needs to be converted to UUID so it will convert all Long type parameters to UUID. Please be careful.
