@@ -28,8 +28,6 @@ var convertIDtoUUIDwithCol = function(file, importNeedle, columnName) {
   jhipsterFunc.replaceContent(file, '@SequenceGenerator(name = "sequenceGenerator")', '@GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")');
   jhipsterFunc.replaceContent(file, '@Id', '@Id\n    @Column(name = "'+columnName+'", columnDefinition = "uuid")\n    @org.hibernate.annotations.Type(type="pg-uuid")');
   longToUUID(file);
-  //jhipsterFunc.replaceContent(file, 'public Long getId()', 'public UUID getId()');
-  //jhipsterFunc.replaceContent(file, 'public void setId(Long id)', 'public void setId(UUID id)');
 };
 
 var convertIDtoUUID = function(file, importNeedle) {
@@ -53,8 +51,8 @@ module.exports = yeoman.Base.extend({
     displayLogo: function () {
       // Have Yeoman greet the user.
       this.log('Welcome to the ' + chalk.red('JHipster Aquevix Postgres to UUID Converter') + ' generator! ' + chalk.yellow('v' + packagejs.version + '\n'));
-      // this.log('Variables:');
-      // this.log(JSON.stringify(jhipsterVar));
+      this.log('Variables:');
+      this.log(JSON.stringify(jhipsterVar));
     },
     checkDBType: function () {
       if (jhipsterVar.databaseType != 'sql' && jhipsterVar.prodDatabaseType != 'postgresql') {
@@ -90,27 +88,6 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  /*
-   prompting: function () {
-   var done = this.async();
-
-   //var prompts = [
-   //  {
-   //    type: 'confirm',
-   //    name: 'convertUUID',
-   //    message: 'Do you want to convert to UUID?',
-   //    default: true
-   //  }
-   //];
-
-   this.prompt(prompts, function (props) {
-   this.props = props;
-   // To access props later use this.props.someOption;
-
-   done();
-   }.bind(this));
-   },
-   */
   writing: {
     writeTemplates : function () {
     },
@@ -150,16 +127,12 @@ module.exports = yeoman.Base.extend({
         // And the Repository
         jhipsterFunc.replaceContent(this.javaDir + 'repository/UserRepository.java', 'import java.util.List;', 'import java.util.List;\nimport java.util.UUID;');
         longToUUID(this.javaDir + 'repository/UserRepository.java');
-//        jhipsterFunc.replaceContent(this.javaDir + 'repository/UserRepository.java', 'JpaRepository<User, Long>', 'JpaRepository<User, UUID>');
-//        jhipsterFunc.replaceContent(this.javaDir + 'repository/UserRepository.java', 'findOneById(Long userId)', 'findOneById(UUID userId)');
 
         jhipsterFunc.replaceContent(this.javaDir + 'repository/PersistenceAuditEventRepository.java', 'import java.util.List;', 'import java.util.List;\nimport java.util.UUID;');
         longToUUID(this.javaDir + 'repository/PersistenceAuditEventRepository.java');
-        //jhipsterFunc.replaceContent(this.javaDir + 'repository/PersistenceAuditEventRepository.java', 'JpaRepository<PersistentAuditEvent, Long>', 'JpaRepository<PersistentAuditEvent, UUID>');
 
         jhipsterFunc.replaceContent(this.javaDir + 'service/AuditEventService.java', 'import java.util.Optional;', 'import java.util.Optional;\nimport java.util.UUID;');
         longToUUID(this.javaDir + 'service/AuditEventService.java');
-//        jhipsterFunc.replaceContent(this.javaDir + 'service/AuditEventService.java', 'find(Long id)', 'find(UUID id)');
 
         jhipsterFunc.replaceContent(this.javaDir + 'service/UserService.java', 'getUserWithAuthorities(Long id)', 'getUserWithAuthorities(UUID id)');
 
@@ -181,8 +154,6 @@ module.exports = yeoman.Base.extend({
         longToUUID(this.javaDir + 'service/UserService.java');
 
         var file = glob.sync("src/main/resources/config/liquibase/changelog/*initial_schema.xml")[0];
-        //jhipsterFunc.replaceContent(file, 'type="bigint" autoIncrement="${autoIncrement}"', 'type="uuid"');
-        //jhipsterFunc.replaceContent(file, 'type="bigint" autoIncrement="${autoIncrement}"', 'type="uuid"');
         jhipsterFunc.replaceContent(file, 'type="bigint"', 'type="uuid"',true);
         jhipsterFunc.replaceContent(file, 'autoIncrement="\\$\\{autoIncrement\\}"', '', true);
 
@@ -194,7 +165,6 @@ module.exports = yeoman.Base.extend({
         jhipsterFunc.replaceContent('src/main/resources/config/liquibase/users_authorities.csv', '1;', '8d9b707a-ddf4-11e5-b86d-9a79f06e9478;', true);
         jhipsterFunc.replaceContent('src/main/resources/config/liquibase/users_authorities.csv', '3;', '8d9b77f0-ddf4-11e5-b86d-9a79f06e9478;', true);
         jhipsterFunc.replaceContent('src/main/resources/config/liquibase/users_authorities.csv', '4;', '8d9b79c6-ddf4-11e5-b86d-9a79f06e9478;', true);
-
       }
     },
 
@@ -225,8 +195,6 @@ module.exports = yeoman.Base.extend({
               if(fs.existsSync(this.javaDir + 'service/dto/' + entityName + 'DTO.java')) {
                 jhipsterFunc.replaceContent(this.javaDir + 'service/dto/' + entityName + 'DTO.java', 'import java.util.Objects;', 'import java.util.Objects;\nimport java.util.UUID;');
                 longToUUID(this.javaDir + 'service/dto/' + entityName + 'DTO.java');
-                //jhipsterFunc.replaceContent(this.javaDir + 'web/rest/dto/' + entityName + 'DTO.java', 'public Long getId()', 'public UUID getId()');
-                //jhipsterFunc.replaceContent(this.javaDir + 'web/rest/dto/' + entityName + 'DTO.java', 'public void setId(Long id)', 'public void setId(UUID id)');
               }
 
               // Mapper
@@ -238,37 +206,28 @@ module.exports = yeoman.Base.extend({
               // And the Repository
               jhipsterFunc.replaceContent(this.javaDir + 'repository/' + entityName + 'Repository.java', 'import org.springframework.data.jpa.repository.*;', 'import java.util.UUID;\nimport org.springframework.data.jpa.repository.*;');
               longToUUID(this.javaDir + 'repository/' + entityName + 'Repository.java');
-              //jhipsterFunc.replaceContent(this.javaDir + 'repository/' + entityName + 'Repository.java', 'JpaRepository<' + entityName + ',Long>', 'JpaRepository<' + entityName + ',UUID>');
-              //jhipsterFunc.replaceContent(this.javaDir + 'repository/' + entityName + 'Repository.java', '@Param("id") Long id', '@Param("id") UUID id');
 
               // The Search Repository
               if(fs.existsSync(this.javaDir + 'repository/search/' + entityName + 'SearchRepository.java')) {
                 jhipsterFunc.replaceContent(this.javaDir + 'repository/search/' + entityName + 'SearchRepository.java', 'import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;', 'import java.util.UUID;\nimport org.springframework.data.elasticsearch.repository.ElasticsearchRepository;');
                 longToUUID(this.javaDir + 'repository/search/' + entityName + 'SearchRepository.java');
-                //jhipsterFunc.replaceContent(this.javaDir + 'repository/search/' + entityName + 'SearchRepository.java', 'ElasticsearchRepository<' + entityName + ', Long>', 'ElasticsearchRepository<' + entityName + ',UUID>');
               }
 
               // Service
               if(fs.existsSync(this.javaDir + 'service/' + entityName + 'Service.java')) {
                 jhipsterFunc.replaceContent(this.javaDir + 'service/' + entityName + 'Service.java', 'import org.springframework.data.domain.Page;', 'import java.util.UUID;\nimport org.springframework.data.domain.Page;');
                 longToUUID(this.javaDir + 'service/' + entityName + 'Service.java');
-                //jhipsterFunc.replaceContent(this.javaDir + 'service/' + entityName + 'Service.java', 'findOne(Long id)', 'findOne(UUID id)');
-                //jhipsterFunc.replaceContent(this.javaDir + 'service/' + entityName + 'Service.java', 'delete(Long id)', 'delete(UUID id)');
               }
 
               // ServiceImp
               if(fs.existsSync(this.javaDir + 'service/impl/' + entityName + 'ServiceImpl.java')) {
                 jhipsterFunc.replaceContent(this.javaDir + 'service/impl/' + entityName + 'ServiceImpl.java', 'import org.springframework.data.domain.Page;', 'import java.util.UUID;\nimport org.springframework.data.domain.Page;');
                 longToUUID(this.javaDir + 'service/impl/' + entityName + 'ServiceImpl.java');
-                //jhipsterFunc.replaceContent(this.javaDir + 'service/impl/' + entityName + 'ServiceImpl.java', 'findOne(Long id)', 'findOne(UUID id)');
-                //jhipsterFunc.replaceContent(this.javaDir + 'service/impl/' + entityName + 'ServiceImpl.java', 'delete(Long id)', 'delete(UUID id)');
               }
 
               // Resource
               jhipsterFunc.replaceContent(this.javaDir + 'web/rest/' + entityName + 'Resource.java', 'import java.util.List;', 'import java.util.UUID;\nimport java.util.List;');
               longToUUID(this.javaDir + 'web/rest/' + entityName + 'Resource.java');
-              //jhipsterFunc.replaceContent(this.javaDir + 'web/rest/' + entityName + 'Resource.java', '@PathVariable Long id', '@PathVariable UUID id', true);
-              //jhipsterFunc.replaceContent(this.javaDir + 'web/rest/' + entityName + 'Resource.java', '@PathVariable Long id', '@PathVariable UUID id');
 
               // JavaScript
               var entityNameSpinalCased = _s.dasherize(_s.decapitalize(entityName));
@@ -277,7 +236,6 @@ module.exports = yeoman.Base.extend({
 
               // Liquidbase
               var file = glob.sync("src/main/resources/config/liquibase/changelog/*entity_" + entityName + ".xml")[0];
-              //jhipsterFunc.replaceContent(file, 'column name="id" type="bigint" autoIncrement="\$\{autoIncrement\}"', 'column name="id" type="uuid"');
               jhipsterFunc.replaceContent(file, 'type="bigint"', 'type="uuid"',true);
               jhipsterFunc.replaceContent(file, 'autoIncrement="\\$\\{autoIncrement\\}"', '', true);
 
@@ -285,9 +243,10 @@ module.exports = yeoman.Base.extend({
               // TODO: Fix this
               jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'import java.util.List;', 'import java.util.List;\nimport java.util.UUID;');
               jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'getId\\(\\)\\.intValue\\(\\)', 'getId().toString()', true);
-              jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'Long.MAX_VALUE', 'UUID.randomUUID()', true);
-              //jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'getId()\.intValue()', 'getId()');
-              //jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'getId()\.intValue()', 'getId()');
+              jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'Long (.*) = 1L', 'UUID $1 = UUID.fromString("00000000-0000-0000-0000-000000000001")', true);
+              jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'Long (.*) = 2L', 'UUID $1 = UUID.fromString("00000000-0000-0000-0000-000000000002")', true);
+              jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'setId\\(1L\\);', 'setId(UUID.fromString("00000000-0000-0000-0000-000000000001"));', true);
+              jhipsterFunc.replaceContent('src/test/java/'+this.packageFolder+'/web/rest/' + entityName + 'ResourceIntTest.java', 'DEFAULT_ITEM_ID\\.intValue\\(\\)', 'DEFAULT_ITEM_ID.toString()', true);
             }
           }
         }, this);
@@ -304,9 +263,9 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  install: function () {
-    this.installDependencies();
-  },
+  // install: function () {
+  //   this.installDependencies();
+  // },
 
   end: function () {
     this.log(chalk.bold.green('Finished running of Postgres Long Primary Keys to UUID converter. Enjoy !!!'));
