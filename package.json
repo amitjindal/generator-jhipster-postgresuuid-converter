@@ -7,11 +7,7 @@
     "jhipster-module"
   ],
   "homepage": "https://github.com/amitjindal/generator-jhipster-postgresuuid-converter",
-  "author": {
-    "name": "Amit Jindal",
-    "email": "amitjindal@aquevix.com",
-    "url": "https://www.aquevix.com"
-  },
+  "author": "Amit Jindal <amitjindal@aquevix.com> (https://www.aquevix.com)",
   "files": [
     "generators"
   ],
@@ -50,5 +46,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/amitjindal/generator-jhipster-postgresuuid-converter/issues"
+  },
+  "directories": {
+    "test": "test"
   }
 }

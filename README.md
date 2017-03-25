@@ -41,7 +41,7 @@ WARNING: This is a work in progress. Please do not use it in production or use a
 
 # License
 
-MIT © [Amit Jindal]
+MIT © [Amit Jindal](https://amitjindal.me)
 
 
 [npm-image]: https://img.shields.io/npm/v/generator-jhipster-postgresuuid-converter.svg
