@@ -1,0 +1,10 @@
+{
+  "generator-jhipster-module": {
+    "promptValues": {
+      "githubName": "amitjindal",
+      "authorName": "Amit Jindal",
+      "authorEmail": "amitjindal@aquevix.com",
+      "authorUrl": "https://www.aquevix.com"
+    }
+  }
+}

@@ -2,10 +2,13 @@ os:
     - linux
 language: node_js
 node_js:
-  - "4.5.0"
+    - "6.11.0"
 before_install:
     - npm install -g npm
 install:
     - npm install
     - npm link
     - npm test
+script:
+    - gulp eslint
+    - gulp test
