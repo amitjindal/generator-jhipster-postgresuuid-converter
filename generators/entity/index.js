@@ -107,13 +107,13 @@ module.exports = JhipsterGenerator.extend({
 
                 // Service
                 if (fs.existsSync(`${javaDir}service/${entityName}Service.java`)) {
-                    this.importUUID(`${javaDir}service/${entityName}Service.java`, 'import org.springframework.data.domain.Page;');
+                    this.importUUID(`${javaDir}service/${entityName}Service.java`, 'import org.slf4j.LoggerFactory;');
                     this.longToUUID(`${javaDir}service/${entityName}Service.java`);
                 }
 
                 // ServiceImp
                 if (fs.existsSync(`${javaDir}service/impl/${entityName}ServiceImpl.java`)) {
-                    this.importUUID(`${javaDir}service/impl/${entityName}ServiceImpl.java`, 'import org.springframework.data.domain.Page;');
+                    this.importUUID(`${javaDir}service/impl/${entityName}ServiceImpl.java`, 'import org.slf4j.LoggerFactory;');
                     this.longToUUID(`${javaDir}service/impl/${entityName}ServiceImpl.java`);
                 }
 
@@ -139,7 +139,7 @@ module.exports = JhipsterGenerator.extend({
                 this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, '1L', 'UUID.fromString("00000000-0000-0000-0000-000000000001")', true);
                 this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, '2L', 'UUID.fromString("00000000-0000-0000-0000-000000000002")', true);
                 this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, 'getId\\(\\)\\.intValue\\(\\)', 'getId().toString()', true);
-                this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, 'DEFAULT_ITEM_ID\\.intValue\\(\\)', 'DEFAULT_ITEM_ID.toString()', true);
+                this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, '\\.intValue\\(\\)', '.toString()', true);
                 this.replaceContent(`${javaTestDir}/web/rest/${entityName}ResourceIntTest.java`, 'MAX_VALUE', 'randomUUID()', true);
             }
         },
