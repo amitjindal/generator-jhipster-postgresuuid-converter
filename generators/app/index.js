@@ -104,7 +104,6 @@ module.exports = JhipsterGenerator.extend({
         // Convert Code here
         this.convertIDtoUUIDForColumn(`${javaDir}domain/User.java`, 'import java.time.Instant;', 'id');
 
-        this.replaceContent(`${javaDir}domain/PersistentAuditEvent.java`, '    @Column(name = "event_id")\n', '');
         this.convertIDtoUUIDForColumn(`${javaDir}domain/PersistentAuditEvent.java`, 'import java.util.Map;', 'event_id');
         this.importUUID(`${javaDir}domain/PersistentAuditEvent.java`, 'import java.util.Map;');
         // And the Repository
