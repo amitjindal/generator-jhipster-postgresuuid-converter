@@ -4,7 +4,14 @@
 
 # Introduction
 
-This is a [JHipster](http://jhipster.github.io/) module, that is meant to be used in a JHipster application.
+This is a [JHipster](http://jhipster.github.io/) module, that is meant
+to be used in a JHipster application. The purpose of this module is to
+convert a **monolithic JHipster application** using `Long` primary keys
+to `UUID` based primary keys.
+
+It is important to note that since we don't know what relations may exist,
+the module converts all Long members of Entity classes. You might need to
+do some manual adjustments to converted code. 
 
 # Prerequisites
 
@@ -43,6 +50,25 @@ npm update -g generator-jhipster-postgresuuid-converter
 ```
 
 # Usage
+
+Once a monolithic JHipster application using Postgresql is generated,
+install the module as listed above. On installation, the module will
+convert the generated code to use UUIDs (entities are not affected).
+
+For entities you will need to regenerate the entities. After regeneration
+Jhipster will call this module as a **post entity creation hook** and module
+will convert that entity to UUID based. Any new entity that is generated
+after the installation of this module will automatically be UUID based.
+
+
+# Known Issues
+
+- In some cases tests may not compile as some number conversion may be
+incorrect.
+- ElasticSearch probably won't work as it does not accepts a UUID primary
+key. As per my understanding a converter is needed. I don't know how to
+write that so any suggestions are welcome.
+
 
 # License
 
